@@ -1,39 +1,94 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/css/uikit.min.css" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
     <meta charset="utf-8" />
-    <title>Liste des Animaux</title>
+    <title>Liste des Animaux&nbsp;- TP Species MVC</title>
 </head>
 
-<body>
-    <a href="add">Ajouter</a>
-    <table class="main-table">
-        <thead>
-            <th>Nom</th>
-            <th>Sexe</th>
-            <th>Couleur</th>
-            <th>Espèce</th>
-            <th>Propriétaires</th>
-            <th></th>
-            <th></th>
-        </thead>
-        <tbody>
-            <tr th:each="animal : ${animalList}">
-                <td th:text="${animal.name}" />
-                <td th:text="${animal.sex.getAbbreviation()}" />
-                <td th:text="${animal.color}" />
-                <td th:text="${animal.species.commonName}" />
-                <td th:text="${#strings.listJoin(animal.owners.![fullName], ', ')}" />
-                <td>
-                    <a th:href="@{'edit/' + ${animal.id}}">Modifier</a>
-                </td>
-                <td>
-                    <a th:href="@{'delete/' + ${animal.id}}">Supprimer</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<body class="uk-background-secondary uk-light">
+    <header>
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+                <div class="uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/species/all">TP Species MVC</a>
+                    <ul class="uk-navbar-nav">
+                        <li>
+                            <a href="/species/all">Espèces</a>
+                        </li>
+                        <li class="uk-active">
+                            <a href="/animal/all">Animaux</a>
+                        </li>
+                        <li>
+                            <a href="/person/all">Personnes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="uk-container uk-padding-small">
+        <div class="uk-margin">
+            <a href="add" class="uk-button uk-button-default button-success uk-button-small">
+                <span uk-icon="plus"></span>
+                Ajouter
+            </a>
+        </div>
+        <table class="uk-table uk-table-divider uk-table-striped">
+            <thead>
+                <th>Nom</th>
+                <th>Sexe</th>
+                <th>Couleur</th>
+                <th>Espèce</th>
+                <th>Propriétaires</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr th:each="animal : ${animalList}">
+                    <td th:text="${animal.name}" />
+                    <td th:text="${animal.sex.getAbbreviation()}" />
+                    <td th:text="${animal.color}" />
+                    <td th:text="${animal.species.commonName}" />
+                    <td th:text="${#strings.listJoin(animal.owners.![fullName], ', ')}" />
+                    <td class="uk-button-group">
+                        <a th:href="@{'edit/' + ${animal.id}}"
+                            class="uk-button uk-button-default button-secondary uk-button-small uk-margin-small-right">
+                            <span uk-icon="pencil"></span>
+                            Modifier
+                        </a>
+                        <a th:attr="uk-toggle='target: #confirm-modal' + ${animal.id}"
+                            class="uk-button uk-button-default button-danger uk-button-small">
+                            <span uk-icon="trash"></span>
+                            Supprimer
+                        </a>
+                        <div th:id="${'confirm-modal' + animal.id}" uk-modal>
+                            <div class="uk-modal-dialog uk-margin-large-top uk-modal-body uk-background-secondary">
+                                <button class="uk-modal-close-default" type="button" uk-close></button>
+                                <p>Confirmer la suppression ?</p>
+                                <button class="uk-button uk-button-default uk-button-small uk-modal-close" type="button">Annuler</button>
+                                <a th:href="@{'delete/' + ${animal.id}}"
+                                    class="uk-button uk-button-default button-danger uk-button-small">Supprimer</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer class="uk-padding-small">
+        <div>
+            <p class="uk-text-center uk-text-small uk-text-italic">
+                2023 &copy; DorianBoel
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit-icons.min.js"></script>
+
 </body>
 
 </html>

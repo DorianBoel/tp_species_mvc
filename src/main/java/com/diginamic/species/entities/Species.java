@@ -21,11 +21,11 @@ public class Species {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank
+    @NotBlank(message = "Ce champ ne doit pas être vide")
     @Length(max = 50, message = "50 caractères max.")
     private String commonName;
 
-    @NotBlank
+    @NotBlank(message = "Ce champ ne doit pas être vide")
     @Length(max = 200, message = "200 caractères max.")
     private String latinName;
 

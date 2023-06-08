@@ -1,53 +1,93 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/css/uikit.min.css" />
     <link rel="stylesheet" th:href="@{/css/main.css}" />
     <meta charset="utf-8" />
-    <title th:if="${animal.id == null}">Ajouter un Animal</title>
-    <title th:if="${animal.id != null}">Modifier un Animal</title>
+    <title th:if="${animal.id == null}">Ajouter un Animal&nbsp;- TP Species MVC</title>
+    <title th:if="${animal.id != null}">Modifier un Animal&nbsp;- TP Species MVC</title>
 </head>
 
-<body>
-    <form th:object="${animal}" th:action="@{/animal}" method="post">
-        <input type="hidden" th:field="*{id}" />
-        <div>
-            <label for="name">Nom :</label>
-            <input type="text" th:field="*{name}" id="name" />
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+<body class="uk-background-secondary uk-light">
+    <header>
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+                <div class="uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/species/all">TP Species MVC</a>
+                    <ul class="uk-navbar-nav">
+                        <li>
+                            <a href="/species/all">Espèces</a>
+                        </li>
+                        <li class="uk-active">
+                            <a href="/animal/all">Animaux</a>
+                        </li>
+                        <li>
+                            <a href="/person/all">Personnes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="uk-container uk-padding-small">
+        <div class="">
+            <a class="link-secondary" onclick="window.location = '/animal/all'">
+                <span uk-icon="arrow-left"></span>Retour
+            </a>
         </div>
+        <form th:object="${animal}" th:action="@{/animal}" method="post" class="uk-form-stacked">
+            <input type="hidden" th:field="*{id}" />
+            <div class="uk-margin-small">
+                <label for="name" class="uk-form-label">Nom :</label>
+                <input type="text" th:field="*{name}" id="name" class="uk-input uk-form-width-large uk-form-small" />
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+            </div>
+            <div class="uk-margin-small">
+                <label for="color" class="uk-form-label">Couleur :</label>
+                <input type="text" th:field="*{color}" id="color"  class="uk-input uk-form-width-large uk-form-small" />
+                <span th:if="${#fields.hasErrors('color')}" th:errors="*{color}" />
+            </div>
+            <div class="uk-margin-small">
+                <label for="sex" class="uk-form-label">Sexe :</label>
+                <select th:field="*{sex}" id="sex" class="uk-select uk-form-width-large uk-form-small">
+                    <option th:each="sexOpt : ${sexValues}" th:value="${sexOpt}"
+                        th:text="${sexOpt.getAbbreviation()}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}" />
+            </div>
+            <div class="uk-margin-small">
+                <label for="species" class="uk-form-label">Espèce :</label>
+                <select th:field="*{species}" id="species" class="uk-select uk-form-width-large uk-form-small">
+                    <option th:each="speciesOpt : ${speciesValues}" th:value="${speciesOpt.id}"
+                        th:text="${speciesOpt.commonName}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('species')}" th:errors="*{species}" />
+            </div>
+            <div class="uk-margin-small">
+                <label for="owners" class="uk-form-label">Propriétaires :</label>
+                <select th:field="*{owners}" id="owners" class="uk-select uk-form-width-large uk-form-small" multiple>
+                    <option th:each="personOpt : ${personValues}" th:value="${personOpt.id}"
+                        th:text="${personOpt.fullName}"></option>
+                </select>
+            </div>
+            <div class="uk-margin">
+                <input type="submit" class="uk-button uk-button-default button-success uk-button-small" value="Sauver" />
+            </div>
+        </form>
+    </main>
+
+    <footer class="uk-padding-small">
         <div>
-            <label for="color">Couleur :</label>
-            <input type="text" th:field="*{color}" id="color" />
-            <span th:if="${#fields.hasErrors('color')}" th:errors="*{color}" />
+            <p class="uk-text-center uk-text-small uk-text-italic">
+                2023 &copy; DorianBoel
+            </p>
         </div>
-        <div>
-            <label for="sex">Sexe :</label>
-            <select th:field="*{sex}" id="sex">
-                <option th:each="sexOpt : ${sexValues}" th:value="${sexOpt}"
-                    th:text="${sexOpt.getAbbreviation()}"></option>
-            </select>
-            <span th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}" />
-        </div>
-        <div>
-            <label for="species">Espèce :</label>
-            <select th:field="*{species}" id="species">
-                <option th:each="speciesOpt : ${speciesValues}" th:value="${speciesOpt.id}"
-                    th:text="${speciesOpt.commonName}"></option>
-            </select>
-            <span th:if="${#fields.hasErrors('species')}" th:errors="*{species}" />
-        </div>
-        <div>
-            <label for="owners">Propriétaires :</label>
-            <select th:field="*{owners}" id="owners" multiple>
-                <option th:each="personOpt : ${personValues}" th:value="${personOpt.id}"
-                    th:text="${personOpt.fullName}"></option>
-            </select>
-        </div>
-        <div>
-            <input type="submit" class="button" value="Sauver" />
-            <input type="button" class="button" value="Retour" onclick="window.location = '/animal/all'" />
-        </div>
-    </form>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit-icons.min.js"></script>
+
 </body>
 
 </html>

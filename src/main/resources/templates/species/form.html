@@ -1,31 +1,69 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/css/uikit.min.css" />
     <link rel="stylesheet" th:href="@{/css/main.css}" />
     <meta charset="utf-8" />
-    <title th:if="${species.id == null}">Ajouter une Espèce</title>
-    <title th:if="${species.id != null}">Modifier une Espèce</title>
+    <title th:if="${species.id == null}">Ajouter une Espèce&nbsp;- TP Species MVC</title>
+    <title th:if="${species.id != null}">Modifier une Espèce&nbsp;- TP Species MVC</title>
 </head>
 
-<body>
-    <form th:object="${species}" th:action="@{/species}" method="post">
-        <input type="hidden" th:field="*{id}" />
-        <div>
-            <label for="commonName">Nom commun :</label>
-            <input type="text" th:field="*{commonName}" id="commonName" />
-            <span th:if="${#fields.hasErrors('commonName')}" th:errors="*{commonName}" />
-        </div>
-        <div>
-            <label for="latinName">Nom scientifique :</label>
-            <input type="text" th:field="*{latinName}" id="latinName" />
-            <span th:if="${#fields.hasErrors('latinName')}" th:errors="*{latinName}" />
+<body class="uk-background-secondary uk-light">
+    <header>
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+                <div class="uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/species/all">TP Species MVC</a>
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active">
+                            <a href="/species/all">Espèces</a>
+                        </li>
+                        <li>
+                            <a href="/animal/all">Animaux</a>
+                        </li>
+                        <li>
+                            <a href="/person/all">Personnes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
+    <main class="uk-container uk-padding-small">
+        <div class="uk-margin">
+            <a type="button" class="link-secondary" onclick="window.location = '/species/all'">                <span uk-icon="arrow-left"></span>
+                Retour</a>
         </div>
+        <form th:object="${species}" th:action="@{/species}" method="post" class="uk-form-stacked">
+            <input type="hidden" th:field="*{id}" />
+            <div class="uk-margin-small">
+                <label for="commonName" class="uk-form-label">Nom commun :</label>
+                <input type="text" th:field="*{commonName}" id="commonName" class="uk-input uk-form-width-large uk-form-small" />
+                <span th:if="${#fields.hasErrors('commonName')}" th:errors="*{commonName}" />
+            </div>
+            <div class="uk-margin-small">
+                <label for="latinName" class="uk-form-label">Nom scientifique :</label>
+                <input type="text" th:field="*{latinName}" id="latinName" class="uk-input uk-form-width-large uk-form-small" />
+                <span th:if="${#fields.hasErrors('latinName')}" th:errors="*{latinName}" />
+            </div>
+            <div class="uk-margin">
+                <input type="submit" class="uk-button uk-button-default button-success uk-button-small" value="Sauver" />
+            </div>
+        </form>
+    </main>
+
+    <footer class="uk-padding-small">
         <div>
-            <input type="submit" class="button" value="Sauver" />
-            <input type="button" class="button" value="Retour" onclick="window.location = '/species/all'" />
+            <p class="uk-text-center uk-text-small uk-text-italic">
+                2023 &copy; DorianBoel
+            </p>
         </div>
-    </form>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit-icons.min.js"></script>
+
 </body>
 
 </html>

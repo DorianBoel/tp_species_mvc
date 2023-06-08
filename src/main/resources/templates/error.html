@@ -1,2 +1,53 @@
-<h1 th:text="${error}" style="color: red;"></h1>
-<p th:text="${msg}"></p>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/css/uikit.min.css" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <meta charset="utf-8" />
+    <title>Erreur&nbsp;- TP Species MVC</title>
+</head>
+
+<body class="uk-background-secondary uk-light">
+    <header>
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+                <div class="uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/species/all">TP Species MVC</a>
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active">
+                            <a href="/species/all">Espèces</a>
+                        </li>
+                        <li>
+                            <a href="/animal/all">Animaux</a>
+                        </li>
+                        <li>
+                            <a href="/person/all">Personnes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="uk-container uk-padding-small">
+        <div class="uk-card uk-card-secondary uk-card-body">
+            <p class="uk-text-large uk-text-bold">Une erreur est survenue</p>
+            <p>
+                <span th:text="${error}"></span>
+                <span th:if=${msg} th:text="${' : ' + msg}"></span>
+            </p>
+        </div>
+    </main>
+    <footer class="uk-padding-small">
+        <div>
+            <p class="uk-text-center uk-text-small uk-text-italic">
+                2023 &copy; DorianBoel
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit-icons.min.js"></script>
+
+</body>
+
+</html>

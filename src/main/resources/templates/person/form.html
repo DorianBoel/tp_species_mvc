@@ -1,42 +1,81 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/css/uikit.min.css" />
     <link rel="stylesheet" th:href="@{/css/main.css}" />
     <meta charset="utf-8" />
-    <title th:if="${person.id == null}">Ajouter une Personne</title>
-    <title th:if="${person.id != null}">Modifier une Personne</title>
+    <title th:if="${person.id == null}">Ajouter une Personne&nbsp;- TP Species MVC</title>
+    <title th:if="${person.id != null}">Modifier une Personne&nbsp;- TP Species MVC</title>
 </head>
 
-<body>
-    <form th:object="${person}" th:action="@{/person}" method="post">
-        <input type="hidden" th:field="*{id}" />
-        <div>
-            <label for="firstName">Prénom :</label>
-            <input type="text" th:field="*{firstName}" id="firstName" />
-            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" />
+<body class="uk-background-secondary uk-light">
+    <header>
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+                <div class="uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/species/all">TP Species MVC</a>
+                    <ul class="uk-navbar-nav">
+                        <li>
+                            <a href="/species/all">Espèces</a>
+                        </li>
+                        <li>
+                            <a href="/animal/all">Animaux</a>
+                        </li>
+                        <li class="uk-active">
+                            <a href="/person/all">Personnes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="uk-container uk-padding-small">
+        <div class="uk-margin">
+            <a type="button" class="link-secondary" onclick="window.location = '/person/all'">                <span uk-icon="arrow-left"></span>
+                Retour</a>
         </div>
+        <form th:object="${person}" th:action="@{/person}" method="post" class="uk-form-stacked">
+            <input type="hidden" th:field="*{id}" />
+            <div class="uk-margin-small">
+                <label for="firstName" class="uk-form-label">Prénom :</label>
+                <input type="text" th:field="*{firstName}" id="firstName" class="uk-input uk-form-width-large uk-form-small" />
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" />
+            </div>
+            <div class="uk-margin-small">
+                <label for="lastName" class="uk-form-label">Nom :</label>
+                <input type="text" th:field="*{lastName}" id="lastName"  class="uk-input uk-form-width-large uk-form-small"/>
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" />
+            </div>
+            <div class="uk-margin-small">
+                <label for="age" class="uk-form-label">Age :</label>
+                <input type="number" th:field="*{age}" id="age" min="0" class="uk-input uk-form-width-large uk-form-small"/>
+                <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}" />
+            </div>
+            <div class="uk-margin-small">
+                <label for="animals" class="uk-form-label">Animaux :</label>
+                <select th:field="*{animals}" id="animals" class="uk-select uk-form-width-large uk-form-small" multiple>
+                    <option th:each="animalOpt : ${animalValues}" th:value="${animalOpt.id}"
+                        th:text="${animalOpt.identity}"></option>
+                </select>
+            </div>
+            <div class="uk-margin">
+                <input type="submit" class="uk-button uk-button-default button-success uk-button-small" value="Sauver" />
+            </div>
+        </form>
+    </main>
+
+    <footer class="uk-padding-small">
         <div>
-            <label for="lastName">Nom :</label>
-            <input type="text" th:field="*{lastName}" id="lastName" />
-            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" />
+            <p class="uk-text-center uk-text-small uk-text-italic">
+                2023 &copy; DorianBoel
+            </p>
         </div>
-        <div>
-            <label for="age">Age :</label>
-            <input type="number" th:field="*{age}" id="age" min="0" />
-            <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}" />
-        </div>
-        <div>
-            <label for="animals">Animaux :</label>
-            <select th:field="*{animals}" id="animals" multiple>
-                <option th:each="animalOpt : ${animalValues}" th:value="${animalOpt.id}"
-                    th:text="${animalOpt.identity}"></option>
-            </select>
-        </div>
-        <div>
-            <input type="submit" class="button" value="Sauver" />
-            <input type="button" class="button" value="Retour" onclick="window.location = '/person/all'" />
-        </div>
-    </form>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.19/dist/js/uikit-icons.min.js"></script>
+
 </body>
 
 </html>
