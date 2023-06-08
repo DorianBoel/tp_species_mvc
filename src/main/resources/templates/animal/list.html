@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <meta charset="utf-8" />
+    <title>Liste des Animaux</title>
+</head>
+
+<body>
+    <a href="add">Ajouter</a>
+    <table class="main-table">
+        <thead>
+            <th>Nom</th>
+            <th>Sexe</th>
+            <th>Couleur</th>
+            <th>Espèce</th>
+            <th>Propriétaires</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr th:each="animal : ${animalList}">
+                <td th:text="${animal.name}" />
+                <td th:text="${animal.sex.getAbbreviation()}" />
+                <td th:text="${animal.color}" />
+                <td th:text="${animal.species.commonName}" />
+                <td th:text="${#strings.listJoin(animal.owners.![fullName], ', ')}" />
+                <td>
+                    <a th:href="@{'edit/' + ${animal.id}}">Modifier</a>
+                </td>
+                <td>
+                    <a th:href="@{'delete/' + ${animal.id}}">Supprimer</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

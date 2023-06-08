@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <meta charset="utf-8" />
+    <title>Liste des Personnes</title>
+</head>
+
+<body>
+    <a href="add">Ajouter</a>
+    <table class="main-table">
+        <thead>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Age</th>
+            <th>Animaux</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr th:each="person : ${personList}">
+                <td th:text="${person.firstName}" />
+                <td th:text="${person.lastName}" />
+                <td th:text="${person.age}" />
+                <td th:text="${#strings.listJoin(person.animals.![identity], ', ')}" />
+                <td>
+                    <a th:href="@{'edit/' + ${person.id}}">Modifier</a>
+                </td>
+                <td>
+                    <a th:href="@{'delete/' + ${person.id}}">Supprimer</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
